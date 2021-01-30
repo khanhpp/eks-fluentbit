@@ -16,7 +16,7 @@ spec:
       serviceAccountName: fluent-bit
       containers:
       - name: aws-for-fluent-bit
-        image: 906394416424.dkr.ecr.us-west-2.amazonaws.com/aws-for-fluent-bit:latest
+        image: fluent_bit_image_name
         volumeMounts:
         - name: varlog
           mountPath: /var/log
