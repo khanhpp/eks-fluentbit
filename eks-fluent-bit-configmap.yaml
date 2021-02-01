@@ -18,6 +18,25 @@ data:
         Mem_Buf_Limit     256MB
         Skip_Long_Lines   On
         Refresh_Interval  10
+    [INPUT]
+        Name              tail
+        Tag               kafka_connect_cluster
+        Path              /var/log/containers/*connect-cluster-connect*.log
+        Parser            docker
+        DB                /var/log/flb_kube.db
+        Mem_Buf_Limit     256MB
+        Skip_Long_Lines   On
+        Refresh_Interval  10
+
+    [OUTPUT]
+        Name s3
+        Match kafka_connect_cluster
+        bucket kafka-connect-log
+        region us-west-2
+        store_dir /var/log/fluentbit
+        total_file_size 30M
+        upload_timeout 3m
+
 
     [OUTPUT]
         Name s3
