@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: fluentbit
+  namespace: kube-system
   labels:
     app.kubernetes.io/name: fluentbit
 spec:
@@ -16,7 +17,7 @@ spec:
       serviceAccountName: fluent-bit
       containers:
       - name: aws-for-fluent-bit
-        image: fluent_bit_image_name
+        image: 417315516321.dkr.ecr.us-east-1.amazonaws.com/aws-for-fluent-bit:2.9.0
         volumeMounts:
         - name: varlog
           mountPath: /var/log
@@ -25,9 +26,6 @@ spec:
           readOnly: true
         - name: fluent-bit-config
           mountPath: /fluent-bit/etc/
-        - name: mnt
-          mountPath: /mnt
-          readOnly: true
         resources:
           limits:
             memory: 500Mi
@@ -44,6 +42,3 @@ spec:
       - name: fluent-bit-config
         configMap:
           name: fluent-bit-config
-      - name: mnt
-        hostPath:
-          path: /mnt
