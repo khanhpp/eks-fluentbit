@@ -14,21 +14,20 @@ data:
         Path              /var/log/containers/*kafka*.log
         Parser            docker
         DB                /var/log/flb_kube.db
-        Mem_Buf_Limit     5MB
+        Mem_Buf_Limit     256MB
         Skip_Long_Lines   On
         Refresh_Interval  10
 
     [OUTPUT]
         Name s3
         Match kafka_log
-        bucket your_s3_bucket_for_kafka
-        region your_s3_region
+        bucket kafka-logs-fluentd
+        region us-west-2
         store_dir /var/log/fluentbit
         total_file_size 30M
         upload_timeout 3m
 
   parsers.conf: |
-    [PARSER]
     [PARSER]
         Name        docker
         Format      json
